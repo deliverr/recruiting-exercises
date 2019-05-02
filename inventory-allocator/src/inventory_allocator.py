@@ -8,7 +8,7 @@ class InventoryAllocator:
             e.g. [{'name': 'owd', 'inventory': {'apple': 5, 'orange': 10}}, {'name': 'dm', 'inventory': {'banana': 5, 'orange': 10 }}]
         
     Output: 
-        allocations: List(Dict(string->int))
+        allocations: List(Dict(Dict(string->int)))
             e.g. [{'owd': {'apple': 1}}]
     """
     def allocateOrder(self, order, inventories):
