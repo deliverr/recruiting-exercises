@@ -40,6 +40,7 @@ public class InventoryAllocator {
         return productsByPriority;
     }
 
+    // Given a  list of inventory Distribution and order map, return the best way to ship the orders from warehouses
     public List<Shipment> getCheapestShipments(List<Warehouse> inventoryDistribution, HashMap<String, Integer> order) {
 
         List<Shipment> shipmentsList = new ArrayList<>();

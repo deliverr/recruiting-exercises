@@ -69,14 +69,14 @@ public class InventoryAllocatorTest {
         displayOrderExpectedAndProposedShipment(order,inventoryDistribution,expectedShipment,proposedShipmentList);
         assertEquals(expectedShipment.toString(), proposedShipmentList.toString());
 
-        System.out.println("\n->Not enough inventory, so don't create any shipment");
+        System.out.println("\n->Not enough inventory, it should not create any shipment");
         order.put("apple", 120);
         expectedShipment.clear();
         proposedShipmentList = inventoryAllocator.getCheapestShipments(inventoryDistribution, order);
         displayOrderExpectedAndProposedShipment(order,inventoryDistribution,expectedShipment,proposedShipmentList);
         assertEquals(expectedShipment.toString(), proposedShipmentList.toString());
 
-        System.out.println("\n->Single order is in multiple warehouses, so split the item V_1");
+        System.out.println("\n->Single order is in multiple warehouses, it should split the item [V_1]");
         inventoryDistribution.clear();
         order.clear();
         expectedShipment.clear();
@@ -99,8 +99,7 @@ public class InventoryAllocatorTest {
         displayOrderExpectedAndProposedShipment(order, inventoryDistribution, expectedShipment,proposedShipmentList);
         assertEquals(expectedShipment.toString(), proposedShipmentList.toString());
 
-        System.out.println("\n->Single order is in multiple warehouses, so split the item V_2");
-        //System.out.println("laksdjflakjsdflakdjf: " + inventoryDistribution);
+        System.out.println("\n->Single order is in multiple warehouses, it should split the item [V_2]");
 
         inventoryDistribution.clear();
         expectedShipment.clear();
@@ -126,7 +125,7 @@ public class InventoryAllocatorTest {
         displayOrderExpectedAndProposedShipment(order, inventoryDistribution, expectedShipment,proposedShipmentList);
         assertEquals(expectedShipment.toString(), proposedShipmentList.toString());
 
-        System.out.println("\n->Multiple Orders are in multiple warehouses, so get them across");
+        System.out.println("\n->Multiple Orders are in multiple warehouses, it should create shipments across warehouses");
         order.clear();
         order.put("Apple", 10);
         order.put("Orange", 17);
@@ -184,7 +183,7 @@ public class InventoryAllocatorTest {
         System.out.println("Proposed Shipment:  " + proposedShipmentList);
         assertEquals(expectedShipment.toString(), proposedShipmentList.toString());
 
-        System.out.println("\n-> Multiple orders, multiple inventories, but one is missing, can't ship it");
+        System.out.println("\n-> Multiple orders, multiple inventories, but one is missing, it should not create any shipment");
         System.out.println(order);
         order.put("chicken",20);
         System.out.println(inventoryDistribution);

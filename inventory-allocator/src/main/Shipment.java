@@ -20,15 +20,6 @@ public class Shipment {
     public Shipment(){}
     @Override
     public String toString() {
-       // StringBuilder shipmentList = new StringBuilder();
-       // int size = this.shipmentList.size();
-        /*
-        for(int i = 0; i < this.shipmentList.size() - 1; i++ ){
-            Product eachShipment = this.shipmentList.get(i);
-            shipmentList.append(eachShipment.getName()+" : "+eachShipment.getQuantity()+" , ");
-        }
-        shipmentList.append(this.shipmentList.get(size -1 ).getName()+" : "+this.shipmentList.get(size -1 ).getQuantity());
-        */
         return "{ " + name + " : { " +
                 "" + this.shipmentList +
                 '}';
