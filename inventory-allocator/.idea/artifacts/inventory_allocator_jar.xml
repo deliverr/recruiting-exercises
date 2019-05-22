@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="inventory-allocator:jar">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="root">
+      <element id="archive" name="inventory-allocator.jar">
+        <element id="module-output" name="inventory-allocator" />
+      </element>
+      <element id="library" level="project" name="Maven: Arquillian JUnit:Release" />
+      <element id="library" level="module" name="JUnit4" module-name="inventory-allocator" />
+    </root>
+  </artifact>
+</component>
