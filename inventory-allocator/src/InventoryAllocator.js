@@ -1,8 +1,9 @@
 
-class InventoryAllocatory {
+class InventoryAllocator {
   constructor() {
     this.order = {};
     this.inventoryDist = [];
+    this.bestShipment = [];
   }
 
   getOrder() {
@@ -13,14 +14,18 @@ class InventoryAllocatory {
     return this.inventoryDist;
   }
 
+  getBestShipment() {
+    return this.bestShipment;
+  }
+
   setOrder(order) {
     this.order = order;
   }
-  
+
   setInventoryDist(inventoryDist) {
     this.inventoryDist = inventoryDist;
   }
-  
+
   checkInventory(order, warehouse) {
     let result = [];
     let inventory = warehouse.inventory;
@@ -54,7 +59,7 @@ class InventoryAllocatory {
     return result;
   }
 
-  makeCheapestShipment(order, inventoryDist) {
+  makeBestShipment(order = this.order, inventoryDist = this.inventoryDist) {
     let result = [];
 
     for (let i = 0; i < inventoryDist.length; i++) {
@@ -63,7 +68,9 @@ class InventoryAllocatory {
       result = result.concat(shipment);
     }
 
-    return result;
+    this.bestShipment = result;
   }
-
 }
+
+
+exports.InventoryAllocator = InventoryAllocator;
