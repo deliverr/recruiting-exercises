@@ -1,54 +1,49 @@
-
 class InventoryAllocator {
-  constructor() {
-    this.order = {};
-    this.inventoryDist = [];
-    this.bestShipment = [];
+  constructor(orderItems, inventoryList) {
+    this._order = orderItems;
+    this._inventoryDist = inventoryList;
   }
 
-  getOrder() {
-    return this.order;
+  get order() {
+    return this._order;
   }
 
-  getInventoryDist() {
-    return this.inventoryDist;
+  get inventoryDist() {
+    return this._inventoryDist;
   }
 
-  getBestShipment() {
-    return this.bestShipment;
+  set order(newOrder) {
+    this._order = newOrder;
   }
 
-  setOrder(order) {
-    this.order = order;
-  }
-
-  setInventoryDist(inventoryDist) {
-    this.inventoryDist = inventoryDist;
+  set inventoryDist(newInventoryDist) {
+    this._inventoryDist = newInventoryDist;
   }
 
   checkInventory(order, warehouse) {
     let result = [];
     let inventory = warehouse.inventory;
-    let copyOrder = order;
+    // let copyOrder = order;
 
     for (let item in inventory) {
       let quantity = inventory[item];
       if (quantity === 0) continue;
 
-      if (item in copyOrder) {
+      if (item in order) {
         let shipment = {};
         let itemAmount = {};
+        // let orderAmt = order[item];
 
-        if (quantity === copyOrder[item]) {
+        if (quantity === order[item]) {
           itemAmount[item] = quantity;
-          delete copyOrder[item];
-        } else if (quantity < copyOrder[item]) {
-          let difference = copyOrder[item] - quantity;
+          delete order[item];
+        } else if (quantity < order[item]) {
+          let difference = order[item] - quantity;
           itemAmount[item] = quantity;
-          copyOrder[item] = difference;
+          order[item] = difference;
         } else {
-          itemAmount[item] = copyOrder[item];
-          delete copyOrder[item];
+          itemAmount[item] = order[item];
+          delete order[item];
         }
 
         shipment[warehouse.name] = itemAmount;
@@ -56,10 +51,11 @@ class InventoryAllocator {
       }
     }
 
-    return result;
+    return result.length < 1 ? null : result;
   }
 
-  makeBestShipment(order = this.order, inventoryDist = this.inventoryDist) {
+  makeBestShipment(order = this.order(), inventoryDist = this.inventoryDist()) {
+    if (!order || !inventoryDist) return null;
     let result = [];
 
     for (let i = 0; i < inventoryDist.length; i++) {
@@ -68,7 +64,7 @@ class InventoryAllocator {
       result = result.concat(shipment);
     }
 
-    this.bestShipment = result;
+    return result;
   }
 }
 
