@@ -1,3 +1,11 @@
+////////////////////////
+/*
+TO RUN TESTS:
+  • npm install
+  • npm test
+*/
+////////////////////////
+
 const { InventoryAllocator } = require("../src/InventoryAllocator");
 const { expect } = require("chai");
 
@@ -93,6 +101,18 @@ describe('InventoryAllocator', () => {
         ).to.eql([{ Costco: { apple: 5 } }, { Costco: { banana: 5 } }]);
       });
     });
+
+    describe('checkOrderFulfillment', () => {
+      it('Should return false if the order is not empty', () => {
+        let order = { apple: 1 };
+        expect(inventoryAllocator.checkOrderFulfillment(order)).to.equal(false);
+      });
+
+      it('Should return true if the order is empty', () => {
+        let order = { };
+        expect(inventoryAllocator.checkOrderFulfillment(order)).to.equal(true);
+      });
+    })
     
     describe('makeBestShipment', () => {
       it('Should return null if there is no order or no inventory distribution', () => {
