@@ -23,7 +23,6 @@ class InventoryAllocator {
   checkInventory(order, warehouse) {
     let result = [];
     let inventory = warehouse.inventory;
-    // let copyOrder = order;
 
     for (let item in inventory) {
       let quantity = inventory[item];
@@ -32,7 +31,6 @@ class InventoryAllocator {
       if (item in order) {
         let shipment = {};
         let itemAmount = {};
-        // let orderAmt = order[item];
 
         if (quantity === order[item]) {
           itemAmount[item] = quantity;
@@ -51,20 +49,27 @@ class InventoryAllocator {
       }
     }
 
-    return result.length < 1 ? null : result;
+    return result;
   }
 
-  makeBestShipment(order = this.order(), inventoryDist = this.inventoryDist()) {
+  checkOrderFulfillment(order) {
+    let keys = Object.keys(order);
+    return keys.length > 1 ? false : true;
+  }
+
+  makeBestShipment(order = this.order, inventoryDist = this.inventoryDist) {
     if (!order || !inventoryDist) return null;
-    let result = [];
+    let shipments = [];
 
     for (let i = 0; i < inventoryDist.length; i++) {
       let warehouse = inventoryDist[i];
       let shipment = this.checkInventory(order, warehouse);
-      result = result.concat(shipment);
+      shipments = shipments.concat(shipment);
     }
 
-    return result;
+    let validShipment = this.checkOrderFulfillment(order);
+
+    return validShipment === true ? shipments : [];
   }
 }
 
