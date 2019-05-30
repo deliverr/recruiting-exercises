@@ -54,7 +54,7 @@ class InventoryAllocator {
 
   checkOrderFulfillment(order) {
     let keys = Object.keys(order);
-    return keys.length > 1 ? false : true;
+    return keys.length > 0 ? false : true;
   }
 
   makeBestShipment(order = this.order, inventoryDist = this.inventoryDist) {
@@ -68,7 +68,6 @@ class InventoryAllocator {
     }
 
     let validShipment = this.checkOrderFulfillment(order);
-
     return validShipment === true ? shipments : [];
   }
 }

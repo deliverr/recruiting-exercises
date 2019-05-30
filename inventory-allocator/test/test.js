@@ -44,8 +44,10 @@ describe('InventoryAllocator', () => {
       });
 
       it('Should return the inventory distribution when it has been set', () => {
-        let newInventoryDist = [{ name: "owd", inventory: { apple: 5, orange: 10 } }, 
-        { name: "dm", inventory: { banana: 5, orange: 10 } }];
+        let newInventoryDist = [
+          { name: "owd", inventory: { apple: 5, orange: 10 } }, 
+          { name: "dm", inventory: { banana: 5, orange: 10 } }
+        ];
         inventoryAllocator.inventoryDist = newInventoryDist;
         expect(inventoryAllocator.inventoryDist).to.equal(newInventoryDist);
       });
@@ -61,8 +63,10 @@ describe('InventoryAllocator', () => {
 
     describe('set inventoryDist', () => {
       it('Should set the inventory distribution with the new inventory list', () => {
-        let newInventoryDist = [{ name: "sams", inventory: { carrot: 5, pea: 10 } },
-        { name: "kevins", inventory: { watermelon: 5, blueberry: 10 } }];
+        let newInventoryDist = [
+          { name: "sams", inventory: { carrot: 5, pea: 10 } },
+          { name: "kevins", inventory: { watermelon: 5, blueberry: 10 } }
+        ];
         inventoryAllocator.inventoryDist = newInventoryDist;
         expect(inventoryAllocator.inventoryDist).to.equal(newInventoryDist);
       });
@@ -78,11 +82,12 @@ describe('InventoryAllocator', () => {
       it('Should return an array of object(s) with the warehouse name as the key and the inventory as the value when the warehouse has the correct item and quantity', () => {
         let newOrder = { strawberry: 5 };
         let newWarehouse = { name: "TJs", inventory: { strawberry: 5 } };
-        let newOrder2 = { apple: 5, banana: 5};
-        let newWarehouse2 = { name: "Costco", inventory: { apple: 5, banana: 5 } };
         expect(
           inventoryAllocator.checkInventory(newOrder, newWarehouse)
-        ).to.eql([{ TJs: { strawberry: 5 } }]);
+          ).to.eql([{ TJs: { strawberry: 5 } }]);
+
+        let newOrder2 = { apple: 5, banana: 5 };
+        let newWarehouse2 = { name: "Costco", inventory: { apple: 5, banana: 5 } };
         expect(
           inventoryAllocator.checkInventory(newOrder2, newWarehouse2)
         ).to.eql([{ Costco: { apple: 5 } }, { Costco: { banana: 5 } }]);
@@ -98,6 +103,7 @@ describe('InventoryAllocator', () => {
         inventoryAllocator.order = null;
         inventoryAllocator.inventoryDist = newInventoryDist;
         expect(inventoryAllocator.makeBestShipment()).to.equal(null);
+
         let newOrder = { watermelon: 10};
         inventoryAllocator.order = newOrder;
         inventoryAllocator.inventoryDist = null;
@@ -121,14 +127,28 @@ describe('InventoryAllocator', () => {
         inventoryAllocator.order = newOrder;
         inventoryAllocator.inventoryDist = newInventoryDist;
         expect(inventoryAllocator.makeBestShipment()).to.eql([]);
+
+        let newOrder2 = { apple: 5, orange: 10 };
+        let newInventoryDist2 = [
+          { name: "Costco", inventory: { apple: 5 } },
+          { name: "TJs", inventory: { orange: 5 }}
+        ];
+        inventoryAllocator.order = newOrder2;
+        inventoryAllocator.inventoryDist = newInventoryDist2;
+        expect(inventoryAllocator.makeBestShipment()).to.eql([]);
       });
 
       it('Should split an item across warehouses if that is the only way to completely ship an item', () => {
         let newOrder = { apple: 10 };
-        let newInventoryDist = [{ name: "TJs", inventory: { apple: 5 } }, { name: "Costco", inventory: { apple: 5 } }];
+        let newInventoryDist = [
+          { name: "TJs", inventory: { apple: 5 } }, 
+          { name: "Costco", inventory: { apple: 5 } }
+        ];
         inventoryAllocator.order = newOrder;
         inventoryAllocator.inventoryDist = newInventoryDist;
-        expect(inventoryAllocator.makeBestShipment()).to.eql([{ TJs: { apple: 5 } }, { Costco: { apple: 5 } }]);
+        expect(
+          inventoryAllocator.makeBestShipment()
+          ).to.eql([{ TJs: { apple: 5 } }, { Costco: { apple: 5 } }]);
       });
 
       it('Should split multiple items across warehouses if that is the only way to completely ship the items', () => {
@@ -159,10 +179,6 @@ describe('InventoryAllocator', () => {
           { TJs: { blueberry: 15 } }
         ]);
       });
-
-
-
     });
-
   });
 });
