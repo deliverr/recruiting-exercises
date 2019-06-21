@@ -1,1 +1,5 @@
-node_modules
+/out/*
+/target/*
+/.idea/workspace.xml
+/.idea/tasks.xml
+.DS_Store
