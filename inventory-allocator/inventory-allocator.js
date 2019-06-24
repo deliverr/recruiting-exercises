@@ -38,7 +38,7 @@ class InventoryAllocator {
         const inventoryQuantity = inventory[orderItem];
         let quantityTaken;
 
-        // quantityTaken limited either buy warehouse supply or order quantity
+        // quantityTaken limited either by warehouse supply or order quantity
         if (orderQuantity <= inventoryQuantity) {
           quantityTaken = orderQuantity;
           delete this.order[orderItem];
