@@ -37,6 +37,8 @@ class InventoryAllocator {
       if (inventoryItems.has(orderItem)) {
         const inventoryQuantity = inventory[orderItem];
         let quantityTaken;
+
+        // quantityTaken limited either buy warehouse supply or order quantity
         if (orderQuantity <= inventoryQuantity) {
           quantityTaken = orderQuantity;
           delete this.order[orderItem];
@@ -45,6 +47,7 @@ class InventoryAllocator {
           this.order[orderItem] = orderQuantity - inventoryQuantity;
         }
 
+        // Account for orders with <= 0 quantity
         if (quantityTaken > 0) {
           itemsFilled[orderItem] = quantityTaken;
           this.itemsRemaining -= quantityTaken;
@@ -58,9 +61,13 @@ class InventoryAllocator {
     for (let i = 0; i < this.warehouses.length; i++) {
       const { name, inventory } = this.warehouses[i];
       const inventoryItems = this.shopInventory(inventory);
+
+      // If any item taken from current warehouse, add to warehouses used
       if (Object.keys(inventoryItems).length > 0) {
         this.allocatedInventories.push({ [name]: inventoryItems });
       }
+
+      // Short circuit loop once order fulfilled
       if (this.itemsRemaining === 0) return this.allocatedInventories;
     }
     return [];
