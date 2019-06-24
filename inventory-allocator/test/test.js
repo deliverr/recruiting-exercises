@@ -1,5 +1,4 @@
 const { InventoryAllocator } = require('../inventory-allocator');
-
 const { expect } = require('chai');
 
 describe('InventoryAllocator', () => {
@@ -30,8 +29,28 @@ describe('InventoryAllocator', () => {
       });
     });
 
+    describe('set and get items remaining', () => {
+      it('Should set and get order properly', () => {
+        const newOrder = { apples: 5, bananas: 5 };
+        inventoryAllocator.setOrder(newOrder);
+        const solution = 10;
+        expect(inventoryAllocator.getItemsRemaining()).to.deep.equal(solution);
+      });
+    });
+
+    describe('set and get items remaining', () => {
+      it('Should set and get order with negative and zero quantities properly', () => {
+        const newOrder = {
+          apples: 5, bananas: 5, mangoes: 0, peaches: -5,
+        };
+        inventoryAllocator.setOrder(newOrder);
+        const solution = 10;
+        expect(inventoryAllocator.getItemsRemaining()).to.deep.equal(solution);
+      });
+    });
+
     describe('#allocateInventories', () => {
-      it('Should allocate inventories properly', () => {
+      it('Should allocate single inventories properly', () => {
         const order = { apples: 1 };
         const warehouses = [{ name: 'owd', inventory: { apples: 5, oranges: 10 } }, { name: 'dm', inventory: { bananas: 5, oranges: 10 } }];
         const solution = [{ owd: { apples: 1 } }];
@@ -42,7 +61,7 @@ describe('InventoryAllocator', () => {
     });
 
     describe('#allocateInventories', () => {
-      it('Should allocate inventories properly', () => {
+      it('Should allocate insufficient inventories properly', () => {
         const order = { apples: 1 };
         const warehouses = [{ name: 'owd', inventory: { apples: 0 } }];
         const solution = [];
@@ -53,7 +72,7 @@ describe('InventoryAllocator', () => {
     });
 
     describe('#allocateInventories', () => {
-      it('Should allocate inventories properly', () => {
+      it('Should allocate split inventories properly', () => {
         const order = { apples: 10 };
         const warehouses = [{ name: 'owd', inventory: { apples: 5 } }, { name: 'dm', inventory: { apples: 5 } }];
         const solution = [{ owd: { apples: 5 } }, { dm: { apples: 5 } }];
@@ -64,7 +83,7 @@ describe('InventoryAllocator', () => {
     });
 
     describe('#allocateInventories', () => {
-      it('Should allocate inventories properly', () => {
+      it('Should allocate multiple split inventories properly', () => {
         const order = { apples: 3, watch: 2 };
         const warehouses = [{ name: 'w1', inventory: { apples: 1, watch: 1 } },
           { name: 'w2', inventory: { apples: 1 } },
@@ -77,7 +96,7 @@ describe('InventoryAllocator', () => {
     });
 
     describe('#allocateInventories', () => {
-      it('Should allocate inventories properly', () => {
+      it('Should allocate inventories properly with zero quantity orders', () => {
         const order = { apples: 0, watch: 2 };
         const warehouses = [{ name: 'w1', inventory: { apples: 1, watch: 1 } },
           { name: 'w2', inventory: { apples: 1 } },
@@ -90,8 +109,8 @@ describe('InventoryAllocator', () => {
     });
 
     describe('#allocateInventories', () => {
-      it('Should allocate inventories properly', () => {
-        const order = { apples: 0, watch: 2 };
+      it('Should allocate inventories properly, with negative quantity orders', () => {
+        const order = { apples: -1, watch: 2 };
         const warehouses = [{ name: 'w1', inventory: { apples: 1, watch: 1 } },
           { name: 'w2', inventory: { apples: 1 } },
           { name: 'w3', inventory: { apples: 1, watch: 2 } }];
@@ -103,20 +122,7 @@ describe('InventoryAllocator', () => {
     });
 
     describe('#allocateInventories', () => {
-      it('Should allocate inventories properly', () => {
-        const order = { apples: 0, watch: 2 };
-        const warehouses = [{ name: 'w1', inventory: { apples: 1, watch: 1 } },
-          { name: 'w2', inventory: { apples: 1 } },
-          { name: 'w3', inventory: { apples: 1, watch: 2 } }];
-        const solution = [{ w1: { watch: 1 } }, { w3: { watch: 1 } }];
-        inventoryAllocator.setWarehouses(warehouses);
-        inventoryAllocator.setOrder(order);
-        expect(inventoryAllocator.allocateInventories()).to.deep.equal(solution);
-      });
-    });
-
-    describe('#allocateInventories', () => {
-      it('Should allocate inventories properly', () => {
+      it('Should allocate multiple split inventories properly', () => {
         const order = { apples: 4, oranges: 2, mangoes: 15 };
 
         const warehouses = [{ name: 'w1', inventory: { apples: 3, watch: 1, oranges: 1 } },

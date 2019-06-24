@@ -7,7 +7,8 @@ class InventoryAllocator {
   }
 
   setItemsRemaining() {
-    this.itemsRemaining = Object.values(this.order).reduce((a, b) => a + b, 0);
+    // Only account quantities > 0
+    this.itemsRemaining = Object.values(this.order).reduce((a, b) => (b > 0 ? a + b : a), 0);
   }
 
   setWarehouses(warehouses) {
@@ -27,6 +28,10 @@ class InventoryAllocator {
     return this.order;
   }
 
+  getItemsRemaining() {
+    return this.itemsRemaining;
+  }
+
   shopInventory(inventory) {
     const inventoryItems = new Set(Object.keys(inventory));
     const itemsFilled = {};
@@ -34,13 +39,14 @@ class InventoryAllocator {
     Object.entries(this.order).forEach((orderEntry) => {
       const [orderItem, orderQuantity] = orderEntry;
 
-      if (inventoryItems.has(orderItem)) {
+      if (inventoryItems.has(orderItem) && orderQuantity > 0) {
         const inventoryQuantity = inventory[orderItem];
         let quantityTaken;
-
         // quantityTaken limited either by warehouse supply or order quantity
         if (orderQuantity <= inventoryQuantity) {
           quantityTaken = orderQuantity;
+
+          // Delete order entry once processed
           delete this.order[orderItem];
         } else {
           quantityTaken = inventoryQuantity;
@@ -48,10 +54,8 @@ class InventoryAllocator {
         }
 
         // Account for orders with <= 0 quantity
-        if (quantityTaken > 0) {
-          itemsFilled[orderItem] = quantityTaken;
-          this.itemsRemaining -= quantityTaken;
-        }
+        itemsFilled[orderItem] = quantityTaken;
+        this.itemsRemaining -= quantityTaken;
       }
     });
     return itemsFilled;

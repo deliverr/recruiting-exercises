@@ -4,7 +4,7 @@
   "description": "The problem is compute the best way an order can be shipped (called shipments) given inventory across a set of warehouses (called inventory distribution).",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
