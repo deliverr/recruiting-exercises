@@ -17,7 +17,10 @@ Python 3
 # Input Requirements:
 Because the input string is missing double quotes", The spacing requirements between commas and brackets are strict.
 In addition to that, the keys of the input cannot have \[ or \{ or \, or \:.
+
 Unicode is supported.
+
+Input must be 1 line.
 
 # Testing
 Test cases are written for logic and input. Security is not considered. This program may be vulnerable to deserialization vulnerabilities and DoS in Object deseriazliation.
