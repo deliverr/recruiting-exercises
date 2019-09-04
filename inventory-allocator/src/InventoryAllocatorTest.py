@@ -22,6 +22,7 @@ class InventoryAllocatorTest(unittest.TestCase):
              {
                  'name' : 'vgh',
                  'inventory' : {
+                                'apple' : 3,
                                 'grape' : 3,
                                 'honeydew' : 3,
                                 'jackfruit' : 3
@@ -358,6 +359,24 @@ class InventoryAllocatorTest(unittest.TestCase):
             ]
 
         self.assertEqual(result, expected, 'All stock ordered')
+
+    # multi order, only from one source
+    def testMultiOrderOneSource(self):
+        order = {'apple' : 2, 'grape' : 2, 'jackfruit' : 2}
+        warehouses = self.getWarehouse()
+
+        result = self.allocator.fulfillOrder(order, warehouses)
+        expected = [
+            {
+                'vgh': {
+                        'apple' : 2,
+                        'grape' : 2,
+                        'jackfruit' : 2
+                        }
+                }
+            ]
+
+        self.assertEqual(result, expected, 'Only ship from one warehouse')
 
 
 if __name__ == '__main__':
