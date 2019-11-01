@@ -1,6 +1,11 @@
 import unittest
 from InventoryAllocator import InventoryAllocator
 
+"""
+Usage:
+$ python3 InventoryAllocatorTest.py
+
+"""
 
 class InventoryAllocatorTest(unittest.TestCase):
     def test_simple_case(self):
