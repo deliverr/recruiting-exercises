@@ -1,11 +1,14 @@
+import copy
+
 class InventoryAllocator:
-    def allocate(self, order, warehouse):
+    def allocate(self, org_order, warehouse):
         # avoid from crashing when meeting with empty input
-        if order is None or warehouse is None:
+        if org_order is None or warehouse is None:
             return []
 
-        # initialize the return list
+        # initialize the return list and order list, use deepcopy to avoid modifying original order
         res = []
+        order = copy.deepcopy(org_order)
 
         # by greedy, iterate all the warehouse by index
         for house in warehouse:
