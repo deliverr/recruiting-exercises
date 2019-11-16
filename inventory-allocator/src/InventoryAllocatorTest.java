@@ -304,6 +304,7 @@ public class InventoryAllocatorTest {
 		mapAgainst = new LinkedHashMap<Object, Integer>();
 				
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetCheapestShipmentAllocator1()
@@ -315,36 +316,37 @@ public class InventoryAllocatorTest {
 		
 		invOwd = (LinkedHashMap<Object, Integer>) shipment.get(0).get("owd");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(5));
-	    mapAgainst.put("orange", new Integer(5));
+	    	mapAgainst.put("apple", new Integer(5));
+	    	mapAgainst.put("orange", new Integer(5));
 	    
 		assertEquals(invOwd, mapAgainst);
 		
 		LinkedHashMap<Object, Integer> invDm = (LinkedHashMap<Object, Integer>) shipment.get(1).get("dm");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("banana", new Integer(5));
+	    	mapAgainst.put("banana", new Integer(5));
 	    
-	    assertEquals(invDm, mapAgainst);
+	    	assertEquals(invDm, mapAgainst);
 	    
-	    printOut(1, shipment);
+	    	printOut(1, shipment);
 		
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetCheapestShipmentAllocator2()
 	{
 		
 		/*Allocator2 Test*/
-	    /*Exact Inventory Match*/
+	    	/*Exact Inventory Match*/
 		shipment = allocator2.getCheapestShipment();
 		
 		invOwd = (LinkedHashMap<Object, Integer>) shipment.get(0).get("owd");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(1));
+	    	mapAgainst.put("apple", new Integer(1));
 	    
-	    assertEquals(invOwd, mapAgainst);
+	    	assertEquals(invOwd, mapAgainst);
 		
-	    printOut(2, shipment);
+	    	printOut(2, shipment);
 	    
 	} 
 	
@@ -353,8 +355,8 @@ public class InventoryAllocatorTest {
 	public void testGetCheapestShipmentAllocator3()
 	{
 	    
-	    /*Allocator3 Test*/
-	    /*Not enough Inventory in 1 warehouse*/
+	    	/*Allocator3 Test*/
+	    	/*Not enough Inventory in 1 warehouse*/
 		shipment = allocator3.getCheapestShipment();
 		
 		assertTrue(shipment.size() == 0);
@@ -374,17 +376,17 @@ public class InventoryAllocatorTest {
 		
 		invOwd = (LinkedHashMap<Object, Integer>) shipment.get(0).get("owd");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(5));
+	    	mapAgainst.put("apple", new Integer(5));
 	    
-	    assertEquals(invOwd, mapAgainst);
+	    	assertEquals(invOwd, mapAgainst);
 	    
-	    invDm = (LinkedHashMap<Object, Integer>) shipment.get(1).get("dm");
+	    	invDm = (LinkedHashMap<Object, Integer>) shipment.get(1).get("dm");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(5));
+	    	mapAgainst.put("apple", new Integer(5));
 	    
-	    assertEquals(invDm, mapAgainst);
+	    	assertEquals(invDm, mapAgainst);
 		
-	    printOut(4, shipment);
+	    	printOut(4, shipment);
 	    
 	}  
 	
@@ -393,7 +395,7 @@ public class InventoryAllocatorTest {
 	public void testGetCheapestShipmentAllocator5()
 	{
 		/*Allocator5 Test*/
-	    /*Allocation of order is split up among warehouses, but not enough allocation*/
+	    	/*Allocation of order is split up among warehouses, but not enough allocation*/
 		shipment = allocator5.getCheapestShipment();
 		
 		assertTrue(shipment.size() == 0);
@@ -409,25 +411,25 @@ public class InventoryAllocatorTest {
 		
 		invOwd = (LinkedHashMap<Object, Integer>) shipment.get(0).get("owd");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(5));
-	    mapAgainst.put("orange", new Integer(3));
+	    	mapAgainst.put("apple", new Integer(5));
+	    	mapAgainst.put("orange", new Integer(3));
 	    
-	    assertEquals(invOwd, mapAgainst);
+	    	assertEquals(invOwd, mapAgainst);
 	    
-	    invDm = (LinkedHashMap<Object, Integer>) shipment.get(1).get("dm");
+	    	invDm = (LinkedHashMap<Object, Integer>) shipment.get(1).get("dm");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(2));
+	    	mapAgainst.put("apple", new Integer(2));
 	    
-	    assertEquals(invDm, mapAgainst);
+	    	assertEquals(invDm, mapAgainst);
 	    
-	    LinkedHashMap<Object, Integer> invWh = (LinkedHashMap<Object, Integer>) shipment.get(2).get("wh");
+	    	LinkedHashMap<Object, Integer> invWh = (LinkedHashMap<Object, Integer>) shipment.get(2).get("wh");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(3));
-	    mapAgainst.put("orange", new Integer(1));
+	    	mapAgainst.put("apple", new Integer(3));
+	    	mapAgainst.put("orange", new Integer(1));
 	    
-	    assertEquals(invWh, mapAgainst);
+	    	assertEquals(invWh, mapAgainst);
 	    
-	    printOut(6, shipment);
+	    	printOut(6, shipment);
 	}
 		
 	@SuppressWarnings("unchecked")
@@ -476,13 +478,13 @@ public class InventoryAllocatorTest {
 		/*Last warehouse available*/
 		shipment = allocator10.getCheapestShipment();
 
-	    invWh = (LinkedHashMap<Object, Integer>) shipment.get(0).get("wh");
+	    	invWh = (LinkedHashMap<Object, Integer>) shipment.get(0).get("wh");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(5));
+	    	mapAgainst.put("apple", new Integer(5));
 	    
-	    assertEquals(invWh, mapAgainst);
+	    	assertEquals(invWh, mapAgainst);
 	    
-	    printOut(10, shipment);
+	    	printOut(10, shipment);
 	}
 		
 	@SuppressWarnings("unchecked")
@@ -495,25 +497,25 @@ public class InventoryAllocatorTest {
 
 		invDm = (LinkedHashMap<Object, Integer>) shipment.get(0).get("dm");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(1));
+	    	mapAgainst.put("apple", new Integer(1));
 	    
-	    assertEquals(invDm, mapAgainst);
+	    	assertEquals(invDm, mapAgainst);
 	    
-	    invWh = (LinkedHashMap<Object, Integer>) shipment.get(1).get("wh");
+	    	invWh = (LinkedHashMap<Object, Integer>) shipment.get(1).get("wh");
 		mapAgainst = new LinkedHashMap<>();
-	    mapAgainst.put("apple", new Integer(4));
+	    	mapAgainst.put("apple", new Integer(4));
 	    
-	    assertEquals(invWh, mapAgainst);
+	    	assertEquals(invWh, mapAgainst);
 	    
-	    printOut(11, shipment);
+	    	printOut(11, shipment);
 	}
 
 	
 	private void printOut(int nth, ArrayList<LinkedHashMap<String, Object>> shipment)
 	{
 		System.out.println("Test " + nth + " result:");
-	    System.out.println(shipment);
-	    System.out.println();
+	    	System.out.println(shipment);
+	    	System.out.println();
 	}
 	
 
