@@ -2,32 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28ddaea5-75ea-4a2c-b250-96b65c322f7f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/src.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/description.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/libraries/Maven__Arquillian_JUnit_Release.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/project-template.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/jonathandai_deliverr.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/out/production/jonathandai_deliverr/com/company/InventoryAllocator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/out/production/jonathandai_deliverr/com/company/Order.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/out/production/jonathandai_deliverr/com/company/Shipment.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/out/production/jonathandai_deliverr/com/company/Warehouse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/out/production/jonathandai_deliverr/com/company/tests/InventoryAllocatorTest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/src/com/company/InventoryAllocator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/src/com/company/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/src/com/company/Shipment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/src/com/company/Warehouse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jonathandai_deliverr/src/com/company/tests/InventoryAllocatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jonathandai_deliverr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/jonathandai_deliverr/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jonathandai_deliverr/src/com/company/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/jonathandai_deliverr/src/com/company/Order.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,12 +75,12 @@
       <option name="presentableId" value="Default" />
       <updated>1574652251794</updated>
       <workItem from="1574652253120" duration="328000" />
-      <workItem from="1574652610056" duration="475000" />
+      <workItem from="1574652610056" duration="545000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="803000" />
+    <option name="totallyTimeSpent" value="873000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1822" y="23" width="1538" height="1057" extended-state="0" />

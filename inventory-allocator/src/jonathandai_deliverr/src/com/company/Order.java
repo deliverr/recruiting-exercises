@@ -12,7 +12,7 @@ import java.util.Set;
  * @since   09-21-2019
  */
 
-public class Order implements Serializable {
+public class Order {
     Map<String, Integer> _order;
 
     /**
