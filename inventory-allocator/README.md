@@ -1,5 +1,9 @@
 
+### Running Test Cases
 
+In order to run the test cases, run the following command:
+
+`python main_test.py `
 ### Problem
 
 The problem is compute the best way an order can be shipped (called shipments) given inventory across a set of warehouses (called inventory distribution). 
