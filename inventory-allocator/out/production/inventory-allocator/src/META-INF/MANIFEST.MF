@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: arquillian-junit-container-1.4.1.Final.jar junit-4.12.jar 
+ hamcrest-core-1.3.jar
+Main-Class: main.Main
+
