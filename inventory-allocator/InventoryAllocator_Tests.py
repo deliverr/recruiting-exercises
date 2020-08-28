@@ -3,21 +3,21 @@ from InventoryAllocator import InventoryAllocator
 
 
 class InventoryAllocatorUnitTest(unittest.TestCase):
-    inventory_alloc = InventoryAllocator()
-
         # Valid single warehouse order
 
-    def single_warehouse_order(self):
+    def test_single_warehouse_order(self):
+        inventory_alloc = InventoryAllocator()
         order = {'orange': 0, 'eggplant': 100}
         stock = [{'name': 'eggplant_inc', 'inventory': {'orange': 6, 'eggplant': 10000}}]
         result = [{'eggplant_inc': {'eggplant': 100}}]
-        updated_stock = [{'name': 'owd', 'inventory': {'orange': 6, 'eggplant': 9900}}]
-        self.assertEqual((result, inventory_alloc.inventory_allocator(order, stock)))
+        updated_stock = [{'name': 'eggplant_inc', 'inventory': {'orange': 6, 'eggplant': 9900}}]
+        self.assertEqual(result, inventory_alloc.inventory_allocator(order, stock))
         self.assertEqual(stock, updated_stock)
 
         # Multiple warehouses
 
-    def split_warehouse(self):
+    def test_split_warehouse(self):
+        inventory_alloc = InventoryAllocator()
         order = {'orange': 2, 'eggplant': 100}
         stock = [{'name': 'eggplant_inc', 'inventory': {'orange': 0, 'eggplant': 10000}},
                  {'name': 'orange_city', 'inventory': {'orange': 10, 'eggplant': 0}}]
@@ -30,7 +30,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
         # Negative order value
         # Properly checked that warehouse value did not increase
 
-    def negative_order(self):
+    def test_negative_order(self):
+        inventory_alloc = InventoryAllocator()
         order = {'orange': 0, 'eggplant': -100}
         stock = [{'name': 'eggplant_inc', 'inventory': {'orange': 6, 'eggplant': 10000}}]
         result = []
@@ -38,7 +39,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # Negative warehouse stock value
 
-    def negative_stock(self):
+    def test_negative_stock(self):
+        inventory_alloc = InventoryAllocator()
         order = {'orange': 0, 'eggplant': -100}
         stock = [{'name': 'eggplant_inc', 'inventory': {'orange': -6, 'eggplant': -10000}}]
         result = []
@@ -46,7 +48,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # Order doesnt exist
 
-    def order_dne(self):
+    def test_order_dne(self):
+        inventory_alloc = InventoryAllocator()
         order = {'banganga': 10, 'cinnamon': 20}
         stock = [{'name': 'eggplant_inc', 'inventory': {'orange': 1, 'eggplant': 2}}]
         result = []
@@ -54,7 +57,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # Exact match
 
-    def exacto_match(self):
+    def test_exacto_match(self):
+        inventory_alloc = InventoryAllocator()
         order = {'orange': 2, 'eggplant': 100}
         stock = [{'name': 'eggplant_inc', 'inventory': {'orange': 2, 'eggplant': 100}},
                  {'name': 'orange_city', 'inventory': {'orange': 10, 'eggplant': 10}}]
@@ -66,7 +70,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # Order number is string
 
-    def order_as_string(self):
+    def test_order_as_string(self):
+        inventory_alloc = InventoryAllocator()
         order = {'orange': 'Nen', 'eggplant': 'Gon'}
         stock = [{'name': 'eggplant_inc', 'inventory': {'orange': 2, 'eggplant': 100}},
                  {'name': 'orange_city', 'inventory': {'orange': 10, 'eggplant': 10}}]
@@ -75,11 +80,12 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # Warehouse name is number
 
-    def warehouse_number(self):
+    def test_warehouse_number(self):
+        inventory_alloc = InventoryAllocator()
         order = {'orange': 0, 'eggplant': 20}
         stock = [{'name': 69, 'inventory': {'orange': 2, 'eggplant': 100}},
                  {'name': 'orange_city', 'inventory': {'orange': 10, 'eggplant': 10}}]
-        result = {[{69: {'eggplant': 20}}]}
+        result = [{69: {'eggplant': 20}}]
         updated_stock = [{'name': 69, 'inventory': {'orange': 2, 'eggplant': 80}},
                          {'name': 'orange_city', 'inventory': {'orange': 10, 'eggplant': 10}}]
         self.assertEqual(result, inventory_alloc.inventory_allocator(order, stock))
@@ -87,7 +93,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # Order item is number
 
-    def order_as_id(self):
+    def test_order_as_id(self):
+        inventory_alloc = InventoryAllocator()
         order = {20: 2, 'eggplant': 20}
         stock = [{'name': 69, 'inventory': {'orange': 2, 'eggplant': 100}},
                  {'name': '20city', 'inventory': {20: 10, 'eggplant': 10}}]
@@ -99,7 +106,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # No warehouses
 
-    def no_stock(self):
+    def test_no_stock(self):
+        inventory_alloc = InventoryAllocator()
         order = {'apples': 10, 'starfruit': 9001}
         stock = []
         result = []
@@ -107,7 +115,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # No orders here today
 
-    def no_order(self):
+    def test_no_order(self):
+        inventory_alloc = InventoryAllocator()
         order = {}
         stock = [{'name': 'eggplant_inc', 'inventory': {'orange': 6, 'eggplant': 10000}}]
         result = []
@@ -115,7 +124,8 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
 
         # Deliverr Ironman
 
-    def break_pls(self):
+    def test_break_pls(self):
+        inventory_alloc = InventoryAllocator()
         order = {'apples': 100, 'bananas': 100, 'carrots': 100, 'dandruff shampoo': 5, 'eggplants': 24,
                  'french fries': 2, 'gum gum fruit': 1}
         stock = [{'name': 'owd', 'inventory': {'apples': 20}},
@@ -133,7 +143,7 @@ class InventoryAllocatorUnitTest(unittest.TestCase):
                          {'name': 'dm', 'inventory': {'apples': 0, 'bananas': 0}},
                          {'name': 'mil', 'inventory': {'apples': 80, 'bananas': 450}},
                          {'name': 'hq', 'inventory': {'carrots': 0, 'dandruff shampoo': 0}},
-                         {'name': 'last stop', 'inventory': {'carrots': 100, 'eggplants': 1976, 'gum gum fruit': 0}},
+                         {'name': 'last stop', 'inventory': {'carrots': 0, 'eggplants': 1976, 'gum gum fruit': 0}},
                          {'name': "Mc Donald's", 'inventory': {'french fries': 0}}]
         self.assertEqual(result, inventory_alloc.inventory_allocator(order, stock))
         self.assertEqual(stock, updated_stock)
