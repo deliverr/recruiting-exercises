@@ -1,18 +1,18 @@
-from typing import List, Dict
+from typing import List
 
 
 class InventoryAllocator:
     def inventory_allocator(self, order: dict, stock: List[dict]):
 
         """
-        Allocator method that produces the cheapest shipment based on the an order
+        Allocator method that produces the cheapest deliverry based on the an order
         Arguments:
         :param order: dict
         :param stock: List[dict]
         :return: List[dict]
         """
         # Current order being updated through iterations
-        shipment = []
+        deliverry = []
 
         # Search for requested order in warehouses
         for warehouse in stock:
@@ -21,11 +21,10 @@ class InventoryAllocator:
 
             # Checks and returns if an order is empty
             if not order:
-                return shipment
+                return deliverry
 
             # Iterates through warehouses' stock
             for items in order:
-
 
                 if (type(order[items]) == type(0)) and (order[items] > 0):
 
@@ -38,8 +37,8 @@ class InventoryAllocator:
                         if stocks_supplied > 0:
                             warehouse_supplies[items] = stocks_supplied
 
-         # Mark what stock we took from a specific warehouses and update remaining items in order
+            # Mark what stock we took from a specific warehouses and update remaining items in order
             if len(warehouse_supplies) > 0:
-                shipment.append({warehouse['name']: warehouse_supplies})
+                deliverry.append({warehouse['name']: warehouse_supplies})
 
-        return shipment
+        return deliverry
