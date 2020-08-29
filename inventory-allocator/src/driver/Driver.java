@@ -67,8 +67,9 @@ public class Driver {
 		warehouseList.add(wh2);
 		
 		
+		System.out.println("Input: { apple: 5, banana: 10 }, [{ name: owd, inventory: { apple: 4, banana:10 } }, { name: dm, inventory: { apple: 5, banana:10 }}]");
 		HashMap<String, HashMap<String, Integer>> cheapestShipmentList = InventoryAllocator.getCheapestShipment(order, warehouseList);
-		System.out.println(cheapestShipmentList.toString());
+		System.out.println("Output: " +cheapestShipmentList.toString());
 
 	}
 
