@@ -3,10 +3,10 @@
 # Inventory Allocator Solution
 
 ##### Name: 
-			Priyans Nishithkumar Desai
+Priyans Nishithkumar Desai
 ##### University:
-			University of California, Berkeley
+University of California, Berkeley
 ##### Major: 
-			Computer Science
+Computer Science
 ##### Minor: 
-			Data Science
+Data Science
