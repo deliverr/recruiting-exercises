@@ -95,14 +95,6 @@
                 elif current_quantity == 0:
                     self.add_warehouses_list(partial_completion, self.shipment)
 
-                # If no warehouse in the shipment can completely satisfy the order and there is no combination 
-                # of warehouses in the shipment and/or the leftover warehouses to satisfy the order completely, 
-                # then the whole order is searched for fulfillment in the available warehouses
-                """else:
-                    new_complete_warehouse, visited_warehouses, order_quantity, partial = self.partial_or_complete(order_item.quantity, order_item, 
-                            [], False)
-                    self.add_warehouses_list(partial, self.shipment)"""
-
             # If the shipment is empty, then all the warehouses are looked through
             else:
                 new_complete_warehouse, visited_warehouses, order_quantity, partial = self.partial_or_complete(order_item.quantity, order_item, 
