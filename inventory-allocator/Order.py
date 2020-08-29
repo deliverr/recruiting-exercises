@@ -87,9 +87,6 @@ class Order(object):
                     found_partial = True
                     self.add_warehouses_list(partial, self.shipment)
 
-            if found_warehouse == None and found_partial == False:
-                return {}
-
             # If a warehouse is found, then the order item is added to the warehouse's individual shipment. 
             if found_warehouse:
                 found_warehouse.add_shipment(order_item, quantity)

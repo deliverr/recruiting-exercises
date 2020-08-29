@@ -172,11 +172,11 @@ def test_order_wout_certain_items():
     warehouses =  [
         { "name": "owd", "inventory": { "apple": 2, "orange": 2} }, 
         { "name": "amazon", "inventory": {"banana": 2, "orange": 3}},  
-        { "name": "dm", "inventory": { "apple": 5, "banana": 1, "orange": 5}},
+        { "name": "dm", "inventory": { "apple": 5, "banana": 1, "orange": 4}},
     ]
     main = Main(order, warehouses)
     shipment = main.find_cheapest_shipment()
-    expected = {}
+    expected = {"amazon": {"banana": 2}}
     assert shipment == expected
 
 

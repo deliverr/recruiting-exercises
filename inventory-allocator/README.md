@@ -17,9 +17,30 @@ This repository contains my solution to the Inventory Allocation Problem given b
 ## Running the tests:
 
 1. Install the requirements using pip <br>
-`pip3 -r requirements.txt`
+```bash
+pip3 -r requirements.txt
+```
 
 2. Run the command below to run all the tests. I have used the pytest module for testing of this project.  <br>
-`pytest Tests.py`
+```bash
+pytest Tests.py
+```
 
-## Improvements to the current algorithm
+## Improvement for the existing algorithm:
+
+1. So, if we were to assume that the order in which items were to be purchased, then we can maintain a current shipments list and for next order items give priority to those warehouses already existing in that shipment. The pseudo code for that algorithm is (DISCLAIMER: This is super raw. : <br>
+```
+-->Iterate through all order_items
+	-->If there are warehouse in the current shipment:
+		-->Check if there is a warehouse from the shipment  that can completely fulfill the order
+		-->If not, are there any warehouses in the shipment that can partially fulfill this order. 
+			-->If only a certain quantity can be fulfilled, then check in remaining warehouses for a warehouse to 	 fulfill the remaining the quantity or a warehouse that can completely fulfill the order of the item
+			    --> For the remaining quantity, if only one warehouse is needed
+					--> Check its cost as compared to a warehouse from the remaining warehouses that can completely fulfill an order if that exists
+			    --> If there are multiple warehouses from remaining warehouses, then check if a warehouse from the remaining warehouses can completely fulfill your order. 
+			    	--> If Yes, then discard the combination of warehouses
+			    	--> If No, use the combination. 
+			    	
+	--> If nothing in shipment:
+		Proceed Normally for finding a complete warehouse or combination. 
+```
