@@ -28,7 +28,7 @@ pytest Tests.py
 
 ## Improvement for the existing algorithm:
 
-1. So, if we were to assume that the order in which items were to be purchased, then we can maintain a current shipments list and for next order items give priority to those warehouses already existing in that shipment. The pseudo code for that algorithm is (DISCLAIMER: This is super raw. : <br>
+1. So, if we were to assume that the order in which items were to be purchased, then we can maintain a current shipments list and for next order items give priority to those warehouses already existing in that shipment. The pseudo code for that algorithm is (DISCLAIMER: This is super raw. But, explains my thought process and my in-notebook writing practice for algorithms. If you are interested in studying a python version of this improvement, have a look at extra/order_alternative.py from this directory) : <br>
 ```
 -->Iterate through all order_items
 	-->If there are warehouse in the current shipment:
@@ -44,7 +44,7 @@ pytest Tests.py
 	--> If nothing in shipment:
 		Proceed Normally for finding a complete warehouse or combination. 
 ```
-If you are interested in studying a python version of this improvement, have a look at extra/order_alternative.py
+
 
 2. Some kind of priority can also be set into the costs of having multiple items from one warehouse compared to the rest, to be able to come up with a better alternative. 
 
