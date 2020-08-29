@@ -40,7 +40,12 @@ pytest Tests.py
 			    --> If there are multiple warehouses from remaining warehouses, then check if a warehouse from the remaining warehouses can completely fulfill your order. 
 			    	--> If Yes, then discard the combination of warehouses
 			    	--> If No, use the combination. 
-			    	
+
 	--> If nothing in shipment:
 		Proceed Normally for finding a complete warehouse or combination. 
 ```
+If you are interested in studying a python version of this improvement, have a look at extra/order_alternative.py
+
+2. Some kind of priority can also be set into the costs of having multiple items from one warehouse compared to the rest, to be able to come up with a better alternative. 
+
+3. Some kind of optimization modelling could be applied, involving least squares(?)
