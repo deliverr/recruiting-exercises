@@ -14,12 +14,12 @@ This repository contains my solution to the Inventory Allocation Problem given b
 5. Tests.py - Contains all the tests for this project. 
 6. Warehouse.py - The class for handling the warehouse and its management. 
 
-## Running the tests
+## Running the tests:
 
-1. Install the requirements using pip
+1. Install the requirements using pip <br>
 `pip3 -r requirements.txt`
 
-2. Run the command below to run all the tests. I have used the pytest module for testing of this project. 
+2. Run the command below to run all the tests. I have used the pytest module for testing of this project.  <br>
 `pytest Tests.py`
 
 ## Improvements to the current algorithm
