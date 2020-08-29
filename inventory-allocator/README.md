@@ -28,7 +28,7 @@ pytest Tests.py
 
 ## Improvement for the existing algorithm:
 
-1. So, if we were to assume that the order in which items were to be purchased, then we can maintain a current shipments list and for next order items give priority to those warehouses already existing in that shipment. The pseudo code for that algorithm is (DISCLAIMER: This is super raw. But, explains my thought process and my in-notebook writing practice for algorithms. If you are interested in studying a python version of this improvement, have a look at extra/order_alternative.py from this directory. Note again this is a raw version too and may have errors. If you are interested in running that file, replace lines 30 - 169 in Order.py with this file's contents. But there might be errors. ) : <br>
+1. So, if we were to assume that the order in which items were to be purchased, then we can maintain a current shipments list and for next order items give priority to those warehouses already existing in that shipment. The pseudo code for that algorithm is (DISCLAIMER: This is super raw. But, explains my thought process and my in-notebook writing practice for algorithms. If you are interested in studying a python version of this improvement, have a look at extra/order_alternative.py from this directory. Note again this is a raw version too and may have errors. If you are interested in running that file, replace lines 30 - 169 in Order.py with this file's contents. But there might be errors.) : <br>
 ```
 -->Iterate through all order_items
 	-->If there are warehouse in the current shipment:
