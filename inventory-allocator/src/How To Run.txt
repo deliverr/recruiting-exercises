@@ -1,0 +1,2 @@
+- Go to command prompt or terminal
+- Type: python -m unittest test_InventoryAllocator.py
