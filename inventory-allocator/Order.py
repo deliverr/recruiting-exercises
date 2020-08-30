@@ -38,9 +38,6 @@ class Order(object):
         Aim: Prepares a list of warehouses which can be used to satisfy the order placed. 
         """
 
-        # If partial is found
-        found_partial = False
-
         # Checking if all items in the order could be fulfilled with one warehouse
         all_in_warehouse_possibilities = {}
         for warehouse in self.available_warehouses:
@@ -65,6 +62,8 @@ class Order(object):
             cheapest_warehouse = None
 
         for order_item in self.contents:
+            # If partial is found
+            found_partial = False
 
             # Tracks if a warehouse can completely satisfy an order item's quantity. 
             found_warehouse = None
@@ -73,7 +72,7 @@ class Order(object):
             if cheapest_warehouse:
                 found_warehouse, quantity = cheapest_warehouse, order_item.quantity
 
-            # If the shipment is empty, then all the warehouses are looked through
+            # If no cheapest warehouse is found,s then all the warehouses are looked through
             else:
                 new_complete_warehouse, order_quantity, partial = self.partial_or_complete(order_item.quantity, order_item)
 
@@ -87,6 +86,10 @@ class Order(object):
                     found_partial = True
                     self.add_warehouses_list(partial, self.shipment)
 
+            
+            # If any item remains unallocated, return empty shipment
+            if found_warehouse == None and found_partial == False:
+                return {}
             # If a warehouse is found, then the order item is added to the warehouse's individual shipment. 
             if found_warehouse:
                 found_warehouse.add_shipment(order_item, quantity)
@@ -109,7 +112,6 @@ class Order(object):
         Output:
             complete_warehouse [Warehouse] - None if no warehouse was found to satisfy order completely, otherwise the
             warehouse that was found to satisfy the order
-            visited_warehouses [List[Warehouse]] - An updated list of visited warehouses
             order_quantity (int) - Whatever of the quantity is left of the order
             partial_completion_possible [List[Warehouse]] - A list of warehouses if there are warehouses can be used to
             satisfy the order completely/partially. 

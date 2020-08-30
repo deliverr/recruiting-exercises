@@ -18,6 +18,9 @@ def test_simple():
     assert shipment == expected
 
 def test_inventory_not_enough():
+    """
+    Checks that the allocator returns an empty list when no sufficient quantity is found.
+    """
     order = {"apple": 5}
     warehouses =  [
         { "name": "owd", "inventory": { "apple": 4} }, 
@@ -29,6 +32,9 @@ def test_inventory_not_enough():
     assert shipment == expected
 
 def test_partial():
+    """
+    Checks if an order can be completed completely through a combination of warehouses
+    """
     order = {"apple": 5}
     warehouses =  [
         { "name": "owd", "inventory": { "apple": 2} }, 
@@ -43,6 +49,9 @@ def test_partial():
     assert shipment == expected
 
 def test_multiple():
+    """
+    Checks if multiple orders could be shipped. 
+    """
     order = {"apple": 5, "banana": 10}
     warehouses =  [
         { "name": "owd", "inventory": { "apple": 2, "banana": 10} }, 
@@ -57,6 +66,9 @@ def test_multiple():
     assert shipment == expected
 
 def test_priority_to_shipment():
+    """
+    Another tests for checking handling of multiple warehouses and orders. 
+    """
     order = {"apple": 5, "banana": 10}
     warehouses =  [
         { "name": "owd", "inventory": { "apple": 2, "banana": 10} }, 
@@ -73,8 +85,7 @@ def test_priority_to_shipment():
 
 def test_cheapest_entire():
     """
-    Tests whether a particular item can be found in the warehouse that is already being visited given the
-    order in which the items were processed. 
+    Checks if a complete warehouse is preferred over a cheaper partial options. 
     """
     order = {"banana": 2, "orange": 4,  "apple": 5}
     warehouses =  [
@@ -91,7 +102,7 @@ def test_cheapest_entire():
 
 def test_entire_partial_outside():
     """
-    
+    Another test case for functional testing. 
     """
     order = {"banana": 2, "orange": 4}
     warehouses =  [
@@ -110,7 +121,7 @@ def test_entire_partial_outside():
 
 def test_empty_order():
     """
-
+    Checks if an empty order returns an empty shipment 
     """
     order = {}
     warehouses =  [
@@ -125,7 +136,7 @@ def test_empty_order():
 
 def test_cheapest_takes_priority():
     """
-
+    Checks if a complete warehouse is preferred over a cheaper partial options. 
     """
     order = {"banana": 2, "orange": 5}
     warehouses =  [
@@ -142,6 +153,9 @@ def test_cheapest_takes_priority():
     assert shipment == expected
 
 def test_large_order():
+    """
+    Checks the handling of a very large order. 
+    """
     order = {"banana": 2, "orange": 6, "guava": 30, "pineapple": 100, "strawberries": 400, 
     "raspberries": 20, "apple": 50, "grapes": 20}
     warehouses =  [
@@ -168,6 +182,9 @@ def test_large_order():
     assert shipment == expected
 
 def test_order_wout_certain_items():
+    """
+    Checks that even if one item is not enough in inventory, an empty shipment is sent. 
+    """
     order = {"banana": 2, "orange": 25}
     warehouses =  [
         { "name": "owd", "inventory": { "apple": 2, "orange": 2} }, 
@@ -176,7 +193,7 @@ def test_order_wout_certain_items():
     ]
     main = Main(order, warehouses)
     shipment = main.find_cheapest_shipment()
-    expected = {"amazon": {"banana": 2}}
+    expected = {}
     assert shipment == expected
 
 
