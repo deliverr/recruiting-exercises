@@ -5,19 +5,27 @@
 	2. Java(TM) SE Runtime Environment (build 1.8.0_231-b11)
 	
 ### Compile The Code
-	javac -d bin -sourcepath src -cp lib/lib1.jar;lib/lib2.jar src/driver/Driver.java
+	1. cd to recruiting-exercises/inventory-allocator folder
+	2. Run the below command from the terminal
+		javac -d bin -sourcepath src -cp lib/lib1.jar;lib/lib2.jar src/driver/Driver.java
 	
 ### Run
-	java -cp bin;lib/lib1.jar;lib/lib2.jar driver.Driver
+	1. cd to recruiting-exercises/inventory-allocator folder
+	2. Run the below command from the terminal
+		java -cp bin;lib/lib1.jar;lib/lib2.jar driver.Driver
 	
 
 ## Steps to Run Unit Tests
 
 ### Compile The Test File
-	javac -d bin -sourcepath src -cp hamcrest-core-1.3.jar;junit-4.13.jar src/controller/InventoryAllocatorTest.java
+	1. cd to recruiting-exercises/inventory-allocator folder
+	2. Run the below command from the terminal
+		javac -d bin -sourcepath src -cp hamcrest-core-1.3.jar;junit-4.13.jar src/controller/InventoryAllocatorTest.java
 	
 ### Run The Test File
-	java -cp bin;hamcrest-core-1.3.jar;junit-4.13.jar org.junit.runner.JUnitCore controller.InventoryAllocatorTest
+	1. cd to recruiting-exercises/inventory-allocator folder
+	2. Run the below command from the terminal
+		java -cp bin;hamcrest-core-1.3.jar;junit-4.13.jar org.junit.runner.JUnitCore controller.InventoryAllocatorTest
 
 
 ## Problem
