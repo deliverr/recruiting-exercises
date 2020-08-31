@@ -89,3 +89,13 @@ class Main(object):
                 for item in warehouse.shipment:
                     result[warehouse.name][item[0]] = item[1]
         return result
+
+order = {"apple": 6, "orange": 4, "banana": 4}
+warehouses =  [
+        { "name": "owd", "inventory": { "apple": 2, "orange": 2} }, 
+        { "name": "amazon", "inventory": {"banana": 2, "apple": 3}},  
+        { "name": "dm", "inventory": { "apple": 5, "banana": 2, "orange": 2}},
+    ]
+main = Main(order, warehouses)
+shipment = main.find_cheapest_shipment()
+print(shipment)

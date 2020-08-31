@@ -2,6 +2,7 @@ import pytest
 
 from Main import Main
 
+""" TEST CASE 1 """
 def test_simple():
     """
     Checks a simple case 
@@ -17,6 +18,7 @@ def test_simple():
     }
     assert shipment == expected
 
+""" TEST CASE 2 """
 def test_inventory_not_enough():
     """
     Checks that the allocator returns an empty list when no sufficient quantity is found.
@@ -31,6 +33,7 @@ def test_inventory_not_enough():
     }
     assert shipment == expected
 
+""" TEST CASE 3 """
 def test_partial():
     """
     Checks if an order can be completed completely through a combination of warehouses
@@ -48,6 +51,7 @@ def test_partial():
     }
     assert shipment == expected
 
+""" TEST CASE 4 """
 def test_multiple():
     """
     Checks if multiple orders could be shipped. 
@@ -65,6 +69,7 @@ def test_multiple():
     }
     assert shipment == expected
 
+""" TEST CASE 5 """
 def test_priority_to_shipment():
     """
     Another tests for checking handling of multiple warehouses and orders. 
@@ -83,6 +88,7 @@ def test_priority_to_shipment():
     }
     assert shipment == expected
 
+""" TEST CASE 6 """
 def test_cheapest_entire():
     """
     Checks if a complete warehouse is preferred over a cheaper partial options. 
@@ -100,6 +106,7 @@ def test_cheapest_entire():
     }
     assert shipment == expected
 
+""" TEST CASE 7 """
 def test_entire_partial_outside():
     """
     Another test case for functional testing. 
@@ -119,6 +126,7 @@ def test_entire_partial_outside():
     }
     assert shipment == expected
 
+""" TEST CASE 8 """
 def test_empty_order():
     """
     Checks if an empty order returns an empty shipment 
@@ -134,6 +142,7 @@ def test_empty_order():
     expected = {}
     assert shipment == expected
 
+""" TEST CASE 9 """
 def test_cheapest_takes_priority():
     """
     Checks if a complete warehouse is preferred over a cheaper partial options. 
@@ -152,6 +161,7 @@ def test_cheapest_takes_priority():
     }
     assert shipment == expected
 
+""" TEST CASE 10 """
 def test_large_order():
     """
     Checks the handling of a very large order. 
@@ -181,6 +191,7 @@ def test_large_order():
 
     assert shipment == expected
 
+""" TEST CASE 11 """
 def test_order_wout_certain_items():
     """
     Checks that even if one item is not enough in inventory, an empty shipment is sent. 
@@ -194,6 +205,93 @@ def test_order_wout_certain_items():
     main = Main(order, warehouses)
     shipment = main.find_cheapest_shipment()
     expected = {}
+    assert shipment == expected
+
+""" TEST CASE 12 """
+def test_large_from_few_cheapest_orders():
+    """
+    Checks if large orders could be filled from few warehouses that can completely fulfill the order
+    """
+    order = {"banana": 2, "orange": 6, "guava": 30, "pineapple": 100, "strawberries": 400, 
+    "raspberries": 25, "apple": 50, "grapes": 20}
+    warehouses =  [
+        { "name": "owd", "inventory": { "apple": 2, "orange": 2, "pineapple": 10}}, 
+        { "name": "amazon", "inventory": {"banana": 1, "orange": 3, "guava": 25}},  
+        { "name": "dm", "inventory": { "apple": 20, "banana": 1, "orange": 5, "pineapple": 90}},
+        { "name": "flipkart", "inventory": {"apple": 30, "strawberries": 40}},
+        { "name": "wish", "inventory": {"guava": 10, "strawberries": 100}}, 
+        { "name": "bigbasket", "inventory": {"raspberries": 20, "strawberries": 200, "grapes": 5}}, 
+        { "name": "berkeley bowl", "inventory": {"raspberries": 5, "strawberries": 100, "grapes": 15, "guava": 20}},
+        { "name": "best_fruits", "inventory": {"banana": 2, "orange": 6, "guava": 30, "pineapple": 100}},
+        { "name": "second_best_fruits", "inventory": {"strawberries": 400, "raspberries": 25, "apple": 50, "grapes": 20}}
+    ]
+    main = Main(order, warehouses)
+    shipment = main.find_cheapest_shipment()
+    expected = {
+       'best_fruits': {"banana": 2, "orange": 6, "guava": 30, "pineapple": 100},
+       'second_best_fruits': {"strawberries": 400, "raspberries": 25, "apple": 50, "grapes": 20}
+    }
+    assert shipment == expected
+
+""" TEST CASE 13 """
+def test_all_partial():
+    """
+
+    Checks if all orders could be filled by combination of warehouses. 
+    """
+    order = {"apple": 6, "orange": 4, "banana": 4}
+    warehouses =  [
+        { "name": "owd", "inventory": { "apple": 2, "orange": 2} }, 
+        { "name": "amazon", "inventory": {"banana": 2, "apple": 3}},  
+        { "name": "dm", "inventory": { "apple": 5, "banana": 2, "orange": 2}},
+    ]
+    main = Main(order, warehouses)
+    shipment = main.find_cheapest_shipment()
+    expected = {
+        'owd': {'apple': 2, 'orange': 2}, 
+        'amazon': {'apple': 3, 'banana': 2}, 
+        'dm': {'apple': 1, 'orange': 2, 'banana': 2}
+    }
+    assert shipment == expected
+
+""" TEST CASE 14 """
+def test_ordering_of_items_in_order_does_not_matter():
+    """
+    Uses order from Test Case 13, but checks if ordering of items matter. 
+    """
+    order = {"orange": 4, "banana": 4, "apple": 6}
+    warehouses =  [
+        { "name": "owd", "inventory": { "apple": 2, "orange": 2} }, 
+        { "name": "amazon", "inventory": {"banana": 2, "apple": 3}},  
+        { "name": "dm", "inventory": { "apple": 5, "banana": 2, "orange": 2}},
+    ]
+    main = Main(order, warehouses)
+    shipment = main.find_cheapest_shipment()
+    expected = {
+        'owd': {'apple': 2, 'orange': 2}, 
+        'amazon': {'apple': 3, 'banana': 2}, 
+        'dm': {'apple': 1, 'orange': 2, 'banana': 2}
+    }
+    assert shipment == expected
+
+""" TEST CASE 15 """
+def test_ordering_of_warehouses_matters():
+    """
+    Uses order from Test Case 13, but checks if ordering of warehouses matter.
+    """
+    order = {"orange": 4, "banana": 4, "apple": 6}
+    warehouses =  [
+        { "name": "dm", "inventory": { "apple": 5, "banana": 2, "orange": 3}},
+        { "name": "amazon", "inventory": {"banana": 2, "apple": 3}},  
+        { "name": "owd", "inventory": { "apple": 2, "orange": 1}},
+    ]
+    main = Main(order, warehouses)
+    shipment = main.find_cheapest_shipment()
+    expected = {
+        'owd': {'orange': 1}, 
+        'amazon': {'apple': 1, 'banana': 2}, 
+        'dm': {'apple': 5, 'orange': 3, 'banana': 2}
+    }
     assert shipment == expected
 
 
