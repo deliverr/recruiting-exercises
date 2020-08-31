@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="junit5-Test" name="Shipments" basedir=".">
+
+	<property environment = "env"/>
+
+	<path id = "test.classpath">
+		
+		<pathelement path = "${env.JUNIT}"/>
+		<fileset dir="${env.JUNIT}" includes="*apiguardian-api*.jar"/>
+		<fileset dir="${env.JUNIT}" includes="*junit-jupit*-api*.jar"/>
+		<fileset dir="${env.JUNIT}" includes="*junit-jupit*-params*.jar"/>
+		<fileset dir="${env.JUNIT}" includes="*junit-jupit*-engine*.jar"/>
+		<fileset dir="${env.JUNIT}" includes="*opentest4j*.jar"/>
+		<pathelement path="bin"/>
+		<pathelement path="test/bin"/>
+	</path>
+	
+	<target name="junit5-Test" depends="compile">
+		<junitlauncher printSummary="yes">
+			<classpath refid="test.classpath" />
+			<testclasses outputdir="bin">
+				<fileset dir="bin">
+				<include name="ShipmentsTest.class"/>
+				</fileset>
+				<listener type="legacy-plain" sendSysOut="true"/>
+			</testclasses>
+		</junitlauncher>
+	</target>
+	
+	<target name="compile">
+		<delete dir="bin"/>
+		<mkdir dir ="bin"/>
+		<mkdir dir="test/src"/>
+		<javac includeantruntime="true" srcdir="src" destdir="bin" >
+
+			<classpath refid="test.classpath"/>		
+
+		</javac>
+		<delete dir="bin"/>
+		<mkdir dir ="bin"/>
+		<javac includeantruntime="true" srcdir="src" destdir="bin" >
+
+			<classpath refid="test.classpath"/>
+			
+		</javac>
+
+	</target>
+
+</project>
