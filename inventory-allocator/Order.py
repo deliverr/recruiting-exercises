@@ -38,66 +38,74 @@ class Order(object):
         Aim: Prepares a list of warehouses which can be used to satisfy the order placed. 
         """
 
-        # Checking if all items in the order could be fulfilled with one warehouse
-        all_in_warehouse_possibilities = {}
-        for warehouse in self.available_warehouses:
-            all_in_warehouse = 0
-            for order_item in self.contents:
-                
-                # Checking if certain order item is available 
-                availability = warehouse.check_availability(order_item)
-                if availability >= order_item.quantity:
-                    all_in_warehouse += 1
-
-            # If only the warehouse completely fulfills all items in the order, it is considered. 
-            if all_in_warehouse == len(self.contents):
-                all_in_warehouse_possibilities[warehouse] = warehouse.cost
-
-        # If there are multiple warehouses that completely fulfill an order, 
-        # choose the cheapest one.
-        if all_in_warehouse_possibilities != {}:
-            cheapest_warehouse = min(all_in_warehouse_possibilities, 
-                key=lambda warehouse: all_in_warehouse_possibilities[warehouse])
-        else:
-            cheapest_warehouse = None
-
-        for order_item in self.contents:
-            print(order_item.quantity)
-            # If partial is found
-            found_partial = False
-
-            # Tracks if a warehouse can completely satisfy an order item's quantity. 
-            found_warehouse = None
-
-            # If cheapest warehouse was found, use that
-            if cheapest_warehouse:
-                found_warehouse, quantity = cheapest_warehouse, order_item.quantity
-
-            # If no cheapest warehouse is found,s then all the warehouses are looked through
-            else:
-                new_complete_warehouse, order_quantity, partial = self.partial_or_complete(order_item.quantity, order_item)
-                # If a warehouse that can completely fulfill the order is found, that is chosen. 
-                print(new_complete_warehouse, partial)
-                if new_complete_warehouse:
-                    found_warehouse, quantity = new_complete_warehouse, order_item.quantity
-
-                # If a partial combination is found that can completely fulfill the order is found, 
-                # then those warehouses are added to the shipment. 
-                elif partial and order_quantity == 0:
-                    found_partial = True
-                    self.add_warehouses_list(partial, self.shipment)
-
+        # Input validity check
+        if self.input_validity_check(self.contents):
             
-            # If any item remains unallocated, return empty shipment
-            if found_warehouse == None and found_partial == False:
-                return {}
-            # If a warehouse is found, then the order item is added to the warehouse's individual shipment. 
-            if found_warehouse:
-                found_warehouse.add_shipment(order_item, quantity)
+            # Checking if all items in the order could be fulfilled with one warehouse
+            all_in_warehouse_possibilities = {}
+            for warehouse in self.available_warehouses:
+                all_in_warehouse = 0
+                for order_item in self.contents:
+                    
+                    # Checking if certain order item is available 
+                    availability = warehouse.check_availability(order_item)
+                    if availability >= order_item.quantity:
+                        all_in_warehouse += 1
 
-                # If the warehouse is not in the shipment, then it is added. 
-                if found_warehouse not in self.shipment:
-                    self.shipment.append(found_warehouse)
+                # If only the warehouse completely fulfills all items in the order, it is considered. 
+                if all_in_warehouse == len(self.contents):
+                    all_in_warehouse_possibilities[warehouse] = warehouse.cost
+
+            # If there are multiple warehouses that completely fulfill an order, 
+            # choose the cheapest one.
+            if all_in_warehouse_possibilities != {}:
+                cheapest_warehouse = min(all_in_warehouse_possibilities, 
+                    key=lambda warehouse: all_in_warehouse_possibilities[warehouse])
+            else:
+                cheapest_warehouse = None
+
+            for order_item in self.contents:
+
+                # If partial is found
+                found_partial = False
+
+                # Tracks if a warehouse can completely satisfy an order item's quantity. 
+                found_warehouse = None
+
+                # If cheapest warehouse was found, use that
+                if cheapest_warehouse:
+                    found_warehouse, quantity = cheapest_warehouse, order_item.quantity
+
+                # If no cheapest warehouse is found,s then all the warehouses are looked through
+                else:
+                    new_complete_warehouse, order_quantity, partial = self.partial_or_complete(order_item.quantity, order_item)
+                    # If a warehouse that can completely fulfill the order is found, that is chosen. 
+                    if new_complete_warehouse:
+                        found_warehouse, quantity = new_complete_warehouse, order_item.quantity
+
+                    # If a partial combination is found that can completely fulfill the order is found, 
+                    # then those warehouses are added to the shipment. 
+                    elif partial and order_quantity == 0:
+                        found_partial = True
+                        self.add_warehouses_list(partial, self.shipment)
+
+                
+                # If any item remains unallocated, return empty shipment
+                if found_warehouse == None and found_partial == False:
+                    return {}
+
+                # If a warehouse is found, then the order item is added to the warehouse's individual shipment. 
+                if found_warehouse:
+                    found_warehouse.add_shipment(order_item, quantity)
+
+                    # If the warehouse is not in the shipment, then it is added. 
+                    if found_warehouse not in self.shipment:
+                        self.shipment.append(found_warehouse)
+            
+        # In case of an invalid input, return empty order
+        else:
+            print('Invalid inputs detected.')
+            return {}
 
         shipment_prepared = self.shipment
         self.shipment = []
@@ -132,7 +140,7 @@ class Order(object):
             availability = warehouse.check_availability(order_item)
 
             # if a complete warehouse is found satisfying the entire order
-            if availability >= order_item.quantity:
+            if self.input_validity_check_warehouse(availability) and availability >= order_item.quantity:
                 complete_warehouse = warehouse
                 break
 
@@ -140,27 +148,29 @@ class Order(object):
 
             # Check if order_quantity is greater than availability,
             # if that's the case, break. 
-            elif availability >= order_quantity and order_quantity != 0:
+            elif self.input_validity_check_warehouse(
+                availability) and availability >= order_quantity and order_quantity != 0:
                 partial_completion_possible.append((warehouse, order_item, order_quantity))
                 order_quantity = 0
 
             # If availabilty is not zero i.e. it is not a warehouse not containing the item or it has exhausted
-            elif availability != 0 and order_quantity != 0:
+            elif self.input_validity_check_warehouse(
+                availability) and availability != 0 and order_quantity != 0:
                 order_quantity -= availability
                 partial_completion_possible.append((warehouse, order_item, availability))
         return complete_warehouse, order_quantity, partial_completion_possible
 
     def add_warehouses_list(self, lst, shipment):
         """
+        Aim: 
+            Adds items to the warehouse's shipment.
+            Adds warehouse to the order's shipment if not there already
+
         Input: 
             self [Order] - The current order
             lst  [List[Warehouse, Item of the order, Quantity]] - a list of (warehouse, the item and order quantity) 
             to edit the shipment of the warehouse. 
             shipment [List[Warehouse]] - shipment of this order
-
-        Aim: 
-            Adds items to the warehouse's shipment.
-            Adds warehouse to the order's shipment if not there already
         """
         for warehouse in lst:
 
@@ -170,6 +180,41 @@ class Order(object):
             # Only adds warehouse to the order's shipment if not already there. 
             if warehouse[0] not in shipment:
                 shipment.append(warehouse[0])
+
+    def input_validity_check_warehouse(self, availability):
+        """
+        Aim: Checks the validity of the input of the availability of the quantity in warehouse
+
+        Input:
+            self (Order) - this order
+            availability - int
+
+        Output:
+            validity (boolean)
+        """
+        if type(availability) not in [float, int]:
+            return False
+        elif availability < 0:
+            return False
+        return True
+
+    def input_validity_check(self, order):
+        """
+        Aim: Checks the validity of the input of the of the quantity in order of each item.
+
+        Input:
+            self (Order) - this order
+            order (List[Item]) - checks the validity of the quantities in the order
+
+        Output:
+            validity (boolean)
+        """
+        for order_item in order:
+            if type(order_item.quantity) not in [float, int]:
+                return False
+            elif order_item.quantity <= 0:
+                return False
+        return True
 
 
 
