@@ -325,7 +325,7 @@ def test_reusing_the_warehouses():
 """ TEST CASE 17 """
 def test_invalid_input():
     """
-    Checks a simple case 
+    Checks if the shipment is empty when order is negative
     """
     order = {"apple": -5}
     warehouses =  [
@@ -339,7 +339,7 @@ def test_invalid_input():
 """ TEST CASE 18 """
 def test_invalid_input_2():
     """
-    Checks a simple case 
+    Checks if the shipment is empty when order is string
     """
     order = {"apple": 'four'}
     warehouses =  [
@@ -353,11 +353,11 @@ def test_invalid_input_2():
 """ TEST CASE 19 """
 def test_invalid_input_3():
     """
-    Checks a simple case 
+    Checks if the shipment is empty when warehouse quantity is negative
     """
     order = {"apple": 3}
     warehouses =  [
-        { "name": "owd", "inventory": { "apple": -2} }, 
+        { "name": "owd", "inventory": { "apple": -2}}, 
     ]
     main = Main(order, warehouses)
     shipment = main.find_cheapest_shipment()
@@ -367,7 +367,7 @@ def test_invalid_input_3():
 """ TEST CASE 20 """
 def test_valid_input_1():
     """
-    Checks a simple case 
+    Checks if floats are handled
     """
     order = {"apple": 3.0}
     warehouses =  [
@@ -383,7 +383,7 @@ def test_valid_input_1():
 """ TEST CASE 21 """
 def test_valid_input_2():
     """
-    Checks a simple case 
+    Checks if floats are handled.
     """
     order = {"apple": 3}
     warehouses =  [
