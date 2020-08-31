@@ -1,4 +1,9 @@
-
+### Running Unit Tests
+Download the project
+Proceed to \recruiting-exercises\inventory-allocator directory
+Open Command line or Terminal in this directory and run ant
+The Ant Script will run Unit Tests and store result in bin directory in TEST-ShipmentsTest.txt file 
+The Results can be viewed in that file
 
 ## Problem
 
