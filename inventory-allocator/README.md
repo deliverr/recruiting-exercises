@@ -4,6 +4,16 @@
 3. Open the file, test_inventory_allocator.py.
 4. To run the 37 unit tests found in this file, click on the green arrow in the top-right corner or in the file menu, select Run > Run Without Debugging. Both options will run the Python file in the Terminal. 
 
+### Output of Running Unit Tests on test_inventory_allocator.py file:
+Note: each dot represents a successful test. Failed tests would be indicated with 'F' and any errors aside from AssertionError would be indicated with 'E'.
+
+
+.....................................
+----------------------------------------------------------------------
+Ran 37 tests in 0.005s
+
+OK
+
 <br>
 <br>
 
