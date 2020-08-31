@@ -18,7 +18,7 @@ This repository contains my solution to the Inventory Allocation Problem given b
 
 1. Install the requirements using pip <br>
 ```bash
-pip3 -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 2. Run the command below to run all the tests. I have used the pytest module for testing of this project.  <br>
