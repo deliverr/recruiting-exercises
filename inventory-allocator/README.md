@@ -48,4 +48,4 @@ pytest Tests.py
 
 2. Some kind of priority can also be set into the costs of having multiple items from one warehouse compared to the rest, to be able to come up with a better alternative. 
 
-3. Some kind of optimization modelling could be applied, involving least squares(?)
+3. Some kind of optimization modelling could be applied. 
