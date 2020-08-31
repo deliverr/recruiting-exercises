@@ -62,3 +62,13 @@ class Warehouse(object):
 
         # Appends the order to the shipment
         self.shipment.append((order_item.name, quantity))
+
+    def complete_delivery_of_shipment(self):
+        """
+        Aim: Tell the warehouse that its existing shipment delivery is complete. 
+        Input:
+            self (Warehouse) - this warehouse
+        Output:
+            None
+        """
+        self.shipment = []

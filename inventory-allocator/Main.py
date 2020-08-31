@@ -54,6 +54,12 @@ class Main(object):
             warehouses.append(new_warehouse)
         return warehouses
 
+    def use_existing_warehouses_for_order(self, raw_order):
+        self.raw_order = raw_order
+        self.order = self.add_order()
+        shipment = self.find_cheapest_shipment()
+        return shipment
+
     def add_order(self):
         """
         Aim: Processes the order given in a raw format
@@ -88,4 +94,6 @@ class Main(object):
                 result[warehouse.name] = {}
                 for item in warehouse.shipment:
                     result[warehouse.name][item[0]] = item[1]
+            warehouse.complete_delivery_of_shipment()
         return result
+

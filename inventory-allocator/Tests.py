@@ -294,5 +294,36 @@ def test_ordering_of_warehouses_matters():
     }
     assert shipment == expected
 
+""" TEST CASE 16 """
+def test_reusing_the_warehouses():
+    """
+    Checks if existing warehouses could be used to prepare a new shipment
+    """
+    order = {"orange": 4, "banana": 4}
+    warehouses =  [
+        { "name": "dm", "inventory": { "apple": 5, "banana": 2, "orange": 3}},
+        { "name": "amazon", "inventory": {"banana": 3, "apple": 3}},  
+        { "name": "owd", "inventory": { "apple": 2, "orange": 3}},
+    ]
+    main = Main(order, warehouses)
+    shipment = main.find_cheapest_shipment()
+    expected = {
+        'owd': {'orange': 1}, 
+        'amazon': {'banana': 2}, 
+        'dm': {'orange': 3, 'banana': 2}
+    }
+    assert shipment == expected
+    new_order = {"apple": 5, "orange": 2, "banana": 1}
+    new_shipment = main.use_existing_warehouses_for_order(new_order)
+    new_shipment_expected = {
+        'dm': {'apple': 5}, 
+        'owd': {'orange': 2}, 
+        'amazon': {'banana': 1}
+    }
+    assert new_shipment == new_shipment_expected
+
+
+
+
 
 

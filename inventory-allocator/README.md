@@ -26,6 +26,34 @@ pip3 -r requirements.txt
 pytest Tests.py
 ```
 
+## Running a new order:
+
+1. Navigate to place_order.py
+
+2. The place_order.py contains the following code. Change the order and available warehouses as per your need. 
+```python
+from Main import Main
+ 
+# Describes the order to be placed
+order = {"apple": 5}
+print("Order Received: {}".format(order))
+
+# Describes the available warehouses
+warehouses =  [
+        { "name": "owd", "inventory": { "apple": 6} }, 
+]
+
+# Initializes the driver class for the inventory allocator
+print("Order placed...")
+main = Main(order, warehouses)
+
+# Prepares the shipment
+print("Preparing the shipment...")
+shipment = main.find_cheapest_shipment()
+
+# Prints the shipment
+print("Shipment: {}".format(shipment))
+```
 ## Improvement for the existing algorithm:
 
 1. So, if we were to assume that the order in which items were to be purchased, then we can maintain a current shipments list and for next order items give priority to those warehouses already existing in that shipment. The pseudo code for that algorithm is (DISCLAIMER: This is super raw. But, explains my thought process and my in-notebook writing practice for algorithms. If you are interested in studying a python version of this improvement, have a look at extra/order_alternative.py from this directory. Note again this is a raw version too and may have errors. If you are interested in running that file, replace lines 30 - 169 in Order.py with this file's contents. But there might be errors.) : <br>

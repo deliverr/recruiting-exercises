@@ -62,6 +62,7 @@ class Order(object):
             cheapest_warehouse = None
 
         for order_item in self.contents:
+            print(order_item.quantity)
             # If partial is found
             found_partial = False
 
@@ -75,8 +76,8 @@ class Order(object):
             # If no cheapest warehouse is found,s then all the warehouses are looked through
             else:
                 new_complete_warehouse, order_quantity, partial = self.partial_or_complete(order_item.quantity, order_item)
-
                 # If a warehouse that can completely fulfill the order is found, that is chosen. 
+                print(new_complete_warehouse, partial)
                 if new_complete_warehouse:
                     found_warehouse, quantity = new_complete_warehouse, order_item.quantity
 
