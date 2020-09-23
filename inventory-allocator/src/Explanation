@@ -1,0 +1,7 @@
+--------------- Explanation ---------------
+
+Products: Pojo that will hold the names of the items and their amounts.
+
+InventoryAllocator: Class that will do all the processing; checking the inventory and displaying the proper output.
+
+Driver: The class with the main method. ** This class is the runner class **
