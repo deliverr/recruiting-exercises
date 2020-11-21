@@ -1,61 +1,79 @@
 
+# Inventory Allocator Solution
 
-## Problem
+## Introduction:
+Hi! I am Priyans Nishithkumar Desai. I am a junior at UC Berkeley, studying Computer Science with a minor in Data Science. I am really passionate about algorithms, software engineering and have got a recent interest in machine learning too. 
 
-The problem is compute the best way an order can be shipped (called shipments) given inventory across a set of warehouses (called inventory distribution). 
+This repository contains my solution to the Inventory Allocation Problem given by Deliverr Inc. as part of their coding assessment. I have created this readme to make it easier to understand my thinking behind the design of the solution, how to run tests and some other ideas on improving the current algorithm. 
 
-Your task is to implement a function that will to produce the cheapest shipment.
+## Design:
+1. Inventory.py - This is a class for the Inventory Management of the Warehouse. 
+2. Item.py - Every item in the order or the inventory of a warehouse is an instance of this class. 
+3. Main.py - Driver class for running the entire inventory allocation. 
+4. Order.py - This is the class that handles the processing of a particular order. 
+5. Tests.py - Contains all the tests for this project. 
+6. Warehouse.py - The class for handling the warehouse and its management. 
 
-The first input will be an order: a map of items that are being ordered and how many of them are ordered. For example an order of apples, bananas and oranges of 5 units each will be 
+## Running the tests:
 
-`{ apple: 5, banana: 5, orange: 5 }`
+1. Install the requirements using pip <br>
+```bash
+pip3 install -r requirements.txt
+```
 
-The second input will be a list of object with warehouse name and inventory amounts (inventory distribution) for these items. For example, the inventory across two warehouses called owd and dm for apples, bananas and oranges could look like
+2. Run the command below to run all the tests. I have used the pytest module for testing of this project.  <br>
+```bash
+pytest Tests.py
+```
 
-`[ 
-    {
-    	name: owd,
-    	inventory: { apple: 5, orange: 10 }
-    }, 
-    {
-    	name: dm:,
-    	inventory: { banana: 5, orange: 10 } 
-    }
-]`
+## Running a new order:
 
-You can assume that the list of warehouses is pre-sorted based on cost. The first warehouse will be less expensive to ship from than the second warehouse.
+1. Navigate to place_order.py
 
-You can use any language of your choice to write the solution (internally we use Typescript/Javascript, Python, and some Java). Please write unit tests with your code, a few are mentioned below, but these are not comprehensive. Fork the repository and put your solution inside of the src directory and include a way to run your tests!
+2. The place_order.py contains the following code. Change the order and available warehouses as per your need. 
+```python
+from Main import Main
+ 
+# Describes the order to be placed
+order = {"apple": 5}
+print("Order Received: {}".format(order))
 
-## Examples
+# Describes the available warehouses
+warehouses =  [
+        { "name": "owd", "inventory": { "apple": 6} }, 
+]
 
-### Order can be shipped using one warehouse
+# Initializes the driver class for the inventory allocator
+print("Order placed...")
+main = Main(order, warehouses)
 
-Input: `{ apple: 1 }, [{ name: owd, inventory: { apple: 1 } }]`  
-Output: `[{ owd: { apple: 1 } }]`
+# Prepares the shipment
+print("Preparing the shipment...")
+shipment = main.find_cheapest_shipment()
 
-### Order can be shipped using multiple warehouses
+# Prints the shipment
+print("Shipment: {}".format(shipment))
+```
+## Improvement for the existing algorithm:
 
-Input: `{ apple: 10 }, [{ name: owd, inventory: { apple: 5 } }, { name: dm, inventory: { apple: 5 }}]`  
-Output: `[{ dm: { apple: 5 }}, { owd: { apple: 5 } }]`
+1. So, if we were to assume that the order in which items were to be purchased, then we can maintain a current shipments list and for next order items give priority to those warehouses already existing in that shipment. The pseudo code for that algorithm is (DISCLAIMER: This is super raw. But, explains my thought process and my in-notebook writing practice for algorithms. If you are interested in studying a python version of this improvement, have a look at extra/order_alternative.py from this directory. Note again this is a raw version too and may have errors. If you are interested in running that file, replace lines 30 - 169 in Order.py with this file's contents. But there might be errors.) : <br>
+```
+-->Iterate through all order_items
+	-->If there are warehouse in the current shipment:
+		-->Check if there is a warehouse from the shipment  that can completely fulfill the order
+		-->If not, are there any warehouses in the shipment that can partially fulfill this order. 
+			-->If only a certain quantity can be fulfilled, then check in remaining warehouses for a warehouse to 	 fulfill the remaining the quantity or a warehouse that can completely fulfill the order of the item
+			    --> For the remaining quantity, if only one warehouse is needed
+					--> Check its cost as compared to a warehouse from the remaining warehouses that can completely fulfill an order if that exists
+			    --> If there are multiple warehouses from remaining warehouses, then check if a warehouse from the remaining warehouses can completely fulfill your order. 
+			    	--> If Yes, then discard the combination of warehouses
+			    	--> If No, use the combination. 
 
-### Order cannot be shipped because there is not enough inventory
+	--> If nothing in shipment:
+		Proceed Normally for finding a complete warehouse or combination. 
+```
 
-Input: `{ apple: 1 }, [{ name: owd, inventory: { apple: 0 } }]`  
-Output: `[]`
 
-Input: `{ apple: 2 }, [{ name: owd, inventory: { apple: 1 } }]`  
-Output: `[]`
+2. Some kind of priority can also be set into the costs of having multiple items from one warehouse compared to the rest, to be able to come up with a better alternative. 
 
-## FAQs
-**If an order can be completely shipped from one warehouse or shipped from multiple warehouses, which option is cheaper?**
-  We can assume that shipping out of one warehouse is cheaper than shipping from multiple warehouses.
-
-## What are we looking for
-
-We'll evaluate your code via the following guidelines in no particular order:
-
-1. **Readability**: naming, spacing, consistency
-2. **Correctness**: is the solution correct and does it solve the problem
-1. **Test Code Quality**: Is the test code comperehensive and covering all cases.
-1. **Tool/Language mastery**: is the code using up to date syntax and techniques. 
+3. Some kind of optimization modelling could be applied. 
