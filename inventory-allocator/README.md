@@ -1,5 +1,23 @@
+## To get started:
+1. Install VS Code (https://code.visualstudio.com/)
+2. If Python extension is not installed, there will be a pop-up notification to install the Python extension. Click on the button to authorize the installation.
+3. Open the file, test_inventory_allocator.py.
+4. To run the 37 unit tests found in this file, click on the green arrow in the top-right corner or in the file menu, select Run > Run Without Debugging. Both options will run the Python file in the Terminal. 
+
+### Output of Running Unit Tests on test_inventory_allocator.py file:
+Note: each dot represents a successful test. Failed tests would be indicated with 'F' and any errors aside from AssertionError would be indicated with 'E'.
 
 
+.....................................
+----------------------------------------------------------------------
+Ran 37 tests in 0.005s
+
+OK
+
+<br>
+<br>
+
+# Original ReadMe: 
 ## Problem
 
 The problem is compute the best way an order can be shipped (called shipments) given inventory across a set of warehouses (called inventory distribution). 
