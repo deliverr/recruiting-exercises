@@ -1,0 +1,219 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Collections.ObjectModel;
+
+namespace DeliverrChallenge
+{
+    public class InventoryAllocator
+    {
+        public int OrderAmount { get; private set; }
+        
+        //Object receives orders and locations, than distributes order among locations
+        public Locations AllocateOrderAmongLocations(Orders orders, Locations locations)
+        {
+            //validate if all orders have values >=0
+            if (!ValidateOrders(orders))
+            {
+                Console.WriteLine("Order has negative amount");
+                return null;
+            }
+
+            //validate if all warehouses have values >=0
+            if (!ValidateWareHouse(locations))
+            {
+                Console.WriteLine("Inventory in warehouse has negative number");
+                return null;
+            }
+
+            //loop to iterate through every item in the order
+            foreach (var orderItem in orders._orderList)
+            {
+                OrderAmount = orderItem.Value;
+                int i = 0;
+
+                //loop iterates as need amount of warehouses in a presorted list to store order 
+                while (OrderAmount != 0)
+                {
+
+                    //call method allocateItem for each next warehouse
+                    OrderAmount = locations.locationsList.ElementAt(i).AllocateItem(orderItem.Key, OrderAmount);
+
+                    if (OrderAmount == -1) //AllocateItem() returns (-1) if there are no inventoryName in warehouse
+                    {
+                        Console.WriteLine("No inventory set for" + orderItem.Key);
+                        break;
+                    }
+
+                    if (i == locations.locationsList.Count - 1 && OrderAmount > 0)
+                    {
+                        Console.WriteLine("No inventory space for" + OrderAmount + " of" + orderItem.Key);
+                        break;
+                    }
+                    //go to next warehouse
+                    i++;
+                }
+            }
+
+            foreach(var warehouse in locations.locationsList)
+            {
+                warehouse.PrintStoredItems();
+            }
+            return locations;
+        }
+
+        private bool ValidateOrders(Orders orders)
+        {
+            bool isValid = true;
+
+            foreach (var order in orders._orderList)
+            {
+                if (order.Value < 0)
+                    isValid = false;
+            }
+            return isValid;
+        }
+
+        private bool ValidateWareHouse(Locations locations)
+        {
+            bool isValid = true;
+
+            foreach (var warehouse in locations.locationsList)
+            {
+                foreach (var inventory in warehouse.InventoryAmounts)
+                    if (inventory.Value < 0)
+                        isValid = false;
+            }
+            return isValid;
+        }
+    }
+
+    /// <summary>
+    /// Order object stores collection of orders, where order is a KeyValuePare of "Name" & "Amount"
+    /// </summary>
+    public class Orders
+    {
+        //Stores order details: item and quantity of items
+        public Dictionary<string, int> _orderList;
+
+        public Orders(Dictionary<string, int> orderList)
+        {
+            _orderList = orderList;
+        }
+    }
+
+    
+
+    /// <summary>
+    /// Warehouse object stores Inventory in "_storedInventory" and control available spaces for inventory in "InventoryAmounts"
+    /// </summary>
+    public class WareHouse
+    {
+        public string Name { get; }
+        private Dictionary<string, int> _inventoryAmounts = new Dictionary<string, int>();
+        private ReadOnlyDictionary<string, int> inventoryAmounts;
+        private Dictionary<string, int> _storedInventory = new Dictionary<string, int>();
+        private ReadOnlyDictionary<string, int> storedInventory;
+        //Readonly wrapper
+        public ReadOnlyDictionary<string, int> InventoryAmounts
+        {
+            get
+            {
+                inventoryAmounts = new ReadOnlyDictionary<string, int>(_inventoryAmounts);
+                return inventoryAmounts;
+            }
+        }
+        //Readonly wrapper
+        public ReadOnlyDictionary<string, int> StoredInventory
+        {
+            get
+            {
+                storedInventory = new ReadOnlyDictionary<string, int>(_storedInventory);
+                return storedInventory;
+            }
+        }
+
+        public WareHouse(string wareHouseName)
+        {
+            Name = wareHouseName;
+
+        }
+
+        /// <summary>
+        /// Set "free space" for the item in Inventoryamount Dictionary
+        /// </summary>
+        /// <param name="inventoryName">Input item name</param>
+        /// <param name="inventoryAmount">Input item amount</param>
+        public void SetInventoryAmount(string inventoryName, int inventoryAmount)
+        {
+            if (InventoryAmounts.ContainsKey(inventoryName))
+                //if we add more inventory to a warehouse to an existing item 
+                _inventoryAmounts[inventoryName] += inventoryAmount;
+            else
+                //if we add brand new item
+                _inventoryAmounts.Add(inventoryName, inventoryAmount);
+        }
+
+        /// <summary>
+        /// Allocate items from the order to a
+        /// </summary>
+        /// <param name="itemName">Input item name</param>
+        /// <param name="itemAmount">Input item amount</param>
+        /// <returns></returns>
+        public int AllocateItem(string inventoryName, int inventoryAmount)
+        {
+            if (InventoryAmounts.ContainsKey(inventoryName))
+            {
+                int notAllocated = inventoryAmount;
+                //Check if there is free space in inventory for certain item
+                if (InventoryAmounts[inventoryName] >= notAllocated)
+                {
+                    _storedInventory.Add(inventoryName, notAllocated);
+                    _inventoryAmounts[inventoryName] -= notAllocated;
+                    return 0;
+                }
+                else // inventoryAmounts[inventoryName] < inventoryAmount
+                {
+                    notAllocated = notAllocated - InventoryAmounts[inventoryName]; //decrease not allocated item variable
+                    _storedInventory.Add(inventoryName, InventoryAmounts[inventoryName]); //add allocated item to a stored items Collection
+                    _inventoryAmounts[inventoryName] = 0; //assign to zero available space for storage.
+                    return notAllocated;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Prints output
+        /// </summary>
+        public void PrintStoredItems()
+        {
+            Console.WriteLine("Ware house name is " + Name);
+            foreach (var storedItem in StoredInventory)
+            {
+                Console.WriteLine("{" + storedItem.Key + ", " + storedItem.Value + "}");
+            }
+        }
+    }
+
+    public class Locations
+        {
+        /// <summary>
+        /// List stores possible locations
+        /// </summary>
+        public List<WareHouse> locationsList = new List<WareHouse>();
+
+        /// <summary>
+        /// Method add Object of WareHouse type to a List that stores possible locations
+        /// It is assumed that List is sorted by expenses to store items
+        /// </summary>
+        /// <param name="any">Object type WareHouse</param>
+        public void setWareHouse (WareHouse any)
+        {
+            locationsList.Add(any);
+        }
+    }
+}
