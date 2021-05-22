@@ -1,0 +1,6 @@
+1)Compile both the InventoryAllocator.java and InventoryAllocatorTest.java
+-InventoryAllocator: javac InventoryAllocator.java
+-InventoryAllocatorTest: javac -cp junit.jar:. InventoryAllocatorTest.java
+
+2)Run the InvenotoryAllocatorTest.class
+java -cp junit.jar:hamcrest-core.jar:. org.junit.runner.JUnitCore InventoryAllocatorTest
